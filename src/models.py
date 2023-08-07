@@ -26,7 +26,7 @@ class User(Base):
     last_name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
 
-    class Post(Base):
+class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -38,6 +38,16 @@ class Media(Base):
     type = Column(String(200), unique=True)
     url = Column(String(200), unique=True)
     post_id = Column(Integer, ForeignKey('post.id'))
+
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True)
+    comment_text = Column(String(250))
+    author_id = Column(Integer, ForeignKey('user.id'))
+    post_id = Column(Integer, ForeignKey('post.id'))
+
+    def to_dict(self):
+        return {}
 
 
 # Draw from SQLAlchemy base
